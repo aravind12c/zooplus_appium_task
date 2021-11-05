@@ -67,12 +67,12 @@ jobs:
                 command: adb install app-mock-debug.apk
             - run:
                 name: Run Tests
-                command: mvn clean test -Dtest.level=sanity -Dgroups=sanity
+                command: mvn clean test -Dtest.level=regression -Dgroups=regression
             - store_test_results:
                 path: target/surefire-reports
             - store_artifacts:
                 path: target/surefire-reports
-                destination: sanity-test-results
+                destination: regression-test-results
 workflows:
     version: 2
     build_and_test:

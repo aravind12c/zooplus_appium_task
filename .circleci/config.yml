@@ -1,0 +1,101 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+jobs:
+    build:
+        working_directory: ~/zooplus_appium_task  
+        docker:
+            - image: circleci/openjdk:8-jdk
+        steps:
+            - checkout
+            - run: mvn clean install -DskipTests=true
+    unit-test:
+        working_directory: ~/zooplus_appium_task
+        docker:
+            - image: circleci/openjdk:8-jdk
+        steps:
+            - checkout
+            - run: mvn clean test -Dtest.level=unit -Dgroups=unit
+            - store_test_results:
+                path: target/surefire-reports
+            - store_artifacts:
+                path: target/surefire-reports
+                destination: unit-test-results      
+    sanity-test:
+        working_directory: ~/zooplus_appium_task
+        docker:
+            - image: circleci/android:api-29
+            - image: circleci/openjdk:8-jdk
+        steps:
+            - run:
+                name: Install libs for libpulse
+                command: |
+                        cd
+                        sudo apt-get update
+                        sudo apt-get install pulseaudio
+            - run:
+                name: List Images
+                command: sdkmanager --list --verbose | grep system-images
+            - run:
+                name: Setup Emulator
+                command: sdkmanager "system-images;android-24;default;armeabi-v7a" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
+            - run:
+                name: Launch Emulator
+                command: |
+                    cd ${ANDROID_HOME}/emulator;ls
+                    export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
+                    emulator -avd test -skin 1440x2560 -no-window -noaudio -no-boot-anim -no-window -accel on
+                background: true
+            - run:
+                name: Wait emulator
+                command: |
+                    circle-android wait-for-boot
+                    adb shell input keyevent 82
+            - run:
+                name: Install Node
+                command: |
+                    cd
+                    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+                    sudo apt install nodejs
+            - run:
+                name: Print Node and NPM Version
+                command: |
+                    node --version
+                    npm --version
+            - run:
+                name: Install Appium
+                command: |
+                    cd
+                    npm install appium@1.20.0
+            - run:
+                name: Start Appium
+                command: cd ; appium
+                background: true
+            - run:
+                name: Wait Until Appium Boot
+                command: sleep 30
+            - checkout
+            - run:
+                name: Install APK
+                command: adb install app-mock-debug.apk
+            - run:
+                name: Run Tests
+                command: mvn clean test -Dtest.level=sanity -Dgroups=sanity
+            - store_test_results:
+                path: target/surefire-reports
+            - store_artifacts:
+                path: target/surefire-reports
+                destination: sanity-test-results
+workflows:
+version: 2.1
+build_and_test:
+jobs:
+    - build
+    - unit-test:
+        requires:
+            - build
+    - sanity-test:
+        requires:
+            - unit-test

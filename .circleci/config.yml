@@ -1,28 +1,13 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
-
+version: 2
 jobs:
     build:
-        working_directory: ~/zooplus_appium_task  
-        docker:
-            - image: circleci/openjdk:8-jdk
-        steps:
-            - checkout
-            - run: mvn clean install -DskipTests=true
-    unit-test:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/openjdk:8-jdk
         steps:
             - checkout
-            - run: mvn clean test -Dtest.level=unit -Dgroups=unit
-            - store_test_results:
-                path: target/surefire-reports
-            - store_artifacts:
-                path: target/surefire-reports
-                destination: unit-test-results      
-    sanity-test:
+            - run: mvn clean install -DskipTests=true  
+    regression-test:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-29
@@ -89,13 +74,10 @@ jobs:
                 path: target/surefire-reports
                 destination: sanity-test-results
 workflows:
-version: 2.1
-build_and_test:
-jobs:
-    - build
-    - unit-test:
-        requires:
+    version: 2
+    build_and_test:
+        jobs:
             - build
-    - sanity-test:
-        requires:
-            - unit-test
+            - regression-test:
+                        requires:
+                            - build

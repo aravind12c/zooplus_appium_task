@@ -6,6 +6,8 @@ jobs:
             - image: circleci/openjdk:8-jdk
         steps:
             - checkout
+            - run: java --version
+            - run: node --version
             - run: mvn clean install -DskipTests=true  
     regression-test:
         working_directory: ~/zooplus_appium_task

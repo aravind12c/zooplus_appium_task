@@ -24,8 +24,8 @@ jobs:
                 command: sdkmanager --list --verbose | grep system-images
             - run:
                 name: Setup Emulator
-                command: sdkmanager "system-images;android-29;default;armeabi-v7a" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-29;default;armeabi-v7a"
+                command: sdkmanager "system-images;android-30;google_apis_playstore;arm64-v8a" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis_playstore;arm64-v8a"
             - run:
                 name: Launch Emulator
                 command: |
@@ -53,7 +53,7 @@ jobs:
                 name: Install Appium
                 command: |
                     cd
-                    npm install appium@1.20.0
+                    npm install appium@1.22.0
             - run:
                 name: Start Appium
                 command: cd ; appium

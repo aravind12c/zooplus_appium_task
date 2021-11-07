@@ -3,7 +3,7 @@ jobs:
     build:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/openjdk:8-jdk
+            - image: circleci/openjdk:8.0.302
         steps:
             - checkout
             - run: mvn clean install -DskipTests=true  
@@ -11,7 +11,7 @@ jobs:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-29
-            - image: circleci/openjdk:8-jdk
+            - image: circleci/openjdk:8.0.302
         steps:
             - run:
                 name: Install libs for libpulse

@@ -50,7 +50,7 @@ jobs:
                 name: Install Appium
                 command: |
                     cd
-                    npm install appium@1.22.0
+                    npm install appium@1.18.2
             - run:
                 name: Start Appium
                 command: cd ; appium

@@ -8,7 +8,7 @@ jobs:
             - checkout
             - run:
                 name: Print Java version
-                command:java --version
+                command: java --version
             - run: mvn clean install -DskipTests=true  
     regression-test:
         working_directory: ~/zooplus_appium_task

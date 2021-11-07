@@ -24,8 +24,8 @@ jobs:
                 command: sdkmanager --list --verbose | grep system-images
             - run:
                 name: Setup Emulator
-                command: sdkmanager "system-images;android-30;google_apis_playstore;arm64-v8a" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis_playstore;arm64-v8a"
+                command: sdkmanager "system-images;android-30;default;x86_64" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-30;default;x86_64"
             - run:
                 name: Launch Emulator
                 command: |

@@ -11,16 +11,15 @@ jobs:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-29
+        android-test:
+           executor:
+             name: android/android-machine
+             resource-class: xlarge    
         steps:
             - checkout
             - run:
                 name: List Images
                 command: sdkmanager --list --verbose | grep system-images
-            android-test:
-                    executor:
-                    name: android/android-machine
-                    resource-class: xlarge
-    
             - android/start-emulator-and-run-tests:
                 test-command: ./gradlew connectedDebugAndroidTest
                 system-image: system-images;android-30;google_apis;x86

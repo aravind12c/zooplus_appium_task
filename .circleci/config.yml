@@ -37,9 +37,6 @@ jobs:
                 background: true
             
             - run:
-                name: Install Node
-                command: sudo apt-get install nodejs
-            - run:
                 name: Print Node and NPM Version
                 command: |
                     node --version
@@ -48,7 +45,7 @@ jobs:
                 name: Install Appium
                 command: |
                     cd
-                    npm install appium@1.22.0
+                    npm install -g appium
                     npm audit fix
             - run:
                 name: Start Appium

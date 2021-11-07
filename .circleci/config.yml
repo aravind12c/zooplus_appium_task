@@ -10,7 +10,7 @@ jobs:
     regression-test:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/android:api-29-node
+            - image: circleci/android:api-29
             - image: circleci/openjdk:8-jdk
         steps:
             - checkout
@@ -36,6 +36,17 @@ jobs:
                     emulator -avd test -skin 1080x2220 -no-window -noaudio -no-boot-anim -no-window -accel on
                 background: true
             
+            - run:
+                name: Wait emulator
+                command: |
+                    circle-android wait-for-boot
+                    adb shell input keyevent 82
+            - run:
+                name: Install Node
+                command: |
+                    cd
+                    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+                    sudo apt install nodejs
             - run:
                 name: Print Node and NPM Version
                 command: |

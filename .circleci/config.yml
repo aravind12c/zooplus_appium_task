@@ -11,10 +11,7 @@ jobs:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-29
-        android-test:
-           executor:
-             name: android/android-machine
-             resource-class: xlarge    
+        
         steps:
             - checkout
             - run:

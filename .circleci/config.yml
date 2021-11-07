@@ -56,8 +56,7 @@ jobs:
                 name: Install Appium
                 command: |
                     cd
-                    sudo chown -R root:users /usr/local/lib/node_modules
-                    npm install -g appium
+                    npm install appium@1.22.0
                     npm audit fix
             - run:
                 name: Start Appium

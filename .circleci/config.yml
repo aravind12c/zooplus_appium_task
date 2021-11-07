@@ -14,7 +14,7 @@ jobs:
             - image: circleci/openjdk:8-jdk
         steps:
             - checkout
-            - run: mvn clean install -DskipTests=true
+            
             - run:
                 name: Install libs for libpulse
                 command: |

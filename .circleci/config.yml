@@ -10,7 +10,7 @@ jobs:
                 name: Print Java version
                 command: |
                         sudo apt-get update
-                        sudo apt-get install -y openjdk-8-jre-headless
+                        sudo apt-get install -y openjdk-8-jre
                         sudo apt-get clean
             - run: mvn clean install -DskipTests=true  
     regression-test:

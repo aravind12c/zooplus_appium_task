@@ -13,33 +13,18 @@ jobs:
             - image: circleci/android:api-29
         steps:
             - checkout
-            
-            - run:
-                name: Install libs for libpulse
-                command: |
-                        cd
-                        sudo apt-get update
-                        sudo apt-get install pulseaudio
             - run:
                 name: List Images
                 command: sdkmanager --list --verbose | grep system-images
-            - run:
-                name: Setup Emulator
-                command: sdkmanager "system-images;android-29;google_apis;arm64-v8a" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-29;google_apis;arm64-v8a"
-            - run:
-                name: Launch Emulator
-                command: |
-                    cd ${ANDROID_HOME}/emulator;ls
-                    export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
-                    emulator -avd test -skin 1440x2560 -no-window -noaudio -no-boot-anim -no-window -accel on
-                background: true
-            - run:
-                name: Wait emulator
-                command: |
-                    circle-android wait-for-boot
-                    adb shell input keyevent 82
-            - run:
+            android-test:
+                    executor:
+                    name: android/android-machine
+                    resource-class: xlarge
+    
+            - android/start-emulator-and-run-tests:
+                test-command: ./gradlew connectedDebugAndroidTest
+                system-image: system-images;android-30;google_apis;x86
+
                 name: Install Node
                 command: |
                     cd

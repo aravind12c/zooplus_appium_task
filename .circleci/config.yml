@@ -8,9 +8,9 @@ jobs:
             - checkout
             - run: mvn clean install -DskipTests=true
     regression-test:
-        working_directory: ~/zooplus_appium_task
-        docker:
-            - image: circleci/android:api-29
+      executor:
+        name: android/android-machine
+        resource-class: xlarge
         
         steps:
             - checkout

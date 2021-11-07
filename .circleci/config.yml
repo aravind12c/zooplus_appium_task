@@ -8,7 +8,10 @@ jobs:
             - checkout
             - run:
                 name: Print Java version
-                command: java --version
+                command: |
+                        sudo apt-get update
+                        sudo apt-get install -y openjdk-8-jre-headless
+                        sudo apt-get clean
             - run: mvn clean install -DskipTests=true  
     regression-test:
         working_directory: ~/zooplus_appium_task
@@ -65,9 +68,7 @@ jobs:
                 name: Wait Until Appium Boot
                 command: sleep 30
             - checkout
-            - run:
-                name: Install APK
-                command: adb install app-mock-debug.apk
+            
             - run:
                 name: Run Tests
                 command: mvn clean test -Dtest.level=regression -Dgroups=regression

@@ -10,7 +10,7 @@ jobs:
     regression-test:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/android:api-29
+            - image: circleci/android:api-30
             - image: circleci/openjdk:8-jdk
         steps:
             - run:

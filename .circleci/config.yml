@@ -6,13 +6,6 @@ jobs:
             - image: circleci/openjdk:8-jdk
         steps:
             - checkout
-            - run:
-                name: Print Java version
-                command: |
-                        sudo apt-get update
-                        sudo apt-get install -y openjdk-8-jdk
-                        sudo apt-get clean
-            - run: mvn clean install -DskipTests=true  
     regression-test:
         working_directory: ~/zooplus_appium_task
         docker:

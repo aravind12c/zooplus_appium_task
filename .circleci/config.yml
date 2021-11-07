@@ -15,8 +15,6 @@ jobs:
         steps:
             - checkout
             - run: mvn clean install -DskipTests=true
-
-        steps:
             - run:
                 name: Install libs for libpulse
                 command: |

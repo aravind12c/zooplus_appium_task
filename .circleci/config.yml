@@ -37,7 +37,10 @@ jobs:
             
             - run:
                 name: Install Node
-                command: sudo apt install npm
+                command: |
+                    cd
+                    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+                    sudo apt install nodejs
             - run:
                 name: Print Node and NPM Version
                 command: |

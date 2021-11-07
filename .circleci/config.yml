@@ -34,11 +34,7 @@ jobs:
                     export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
                     emulator -avd test -skin 1080x2220 -no-window -noaudio -no-boot-anim -no-window -accel on
                 background: true
-            - run:
-                name: Wait emulator
-                command: |
-                    circle-android wait-for-boot
-                    adb shell input keyevent 82
+            
             - run:
                 name: Install Node
                 command: |

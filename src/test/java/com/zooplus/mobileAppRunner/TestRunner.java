@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/FeatureFile",
-        glue = {"src/test/java/com.zooplus.stepDefinitions", "classpath:driverInit"},
+        glue = {"classpath:com.zooplus.stepDefinitions", "classpath:com.zooplus.driverInit"},
         plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         tags="@automated"
         

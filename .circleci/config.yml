@@ -30,7 +30,16 @@ jobs:
                 name: Print Node and NPM Version
                 command: |
                     node --version
-                    npm --version            
+                    npm --version
+            - run: |
+                 rm -rf node_modules
+                 npm cache clean --force
+                 rm -rf package-lock.json
+                 
+            - run: npm install --save-dev
+            - run: npm audit fix
+            - run: npm install --save-dev chai
+            
             - run:
                 name: List Images
                 command: sdkmanager --list --verbose | grep system-images
@@ -50,13 +59,7 @@ jobs:
                  adb wait-for-device
                  adb devices
                  echo "Emulator started"
-            - run: |
-                 rm -rf node_modules
-                 npm cache clean --force
-                 rm -rf package-lock.json
-            - run: npm install --save-dev
-            - run: npm audit fix
-            - run: npm install --save-dev chai
+            
                     
             - run:
                 name: Wait emulator

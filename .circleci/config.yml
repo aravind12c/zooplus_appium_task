@@ -49,19 +49,14 @@ jobs:
                 command: |
                     node --version
                     npm --version
-            - run: |
-                 rm -rf node_modules
-                 npm cache clean --force
-                 rm -rf package-lock.json
-                 
-            - run: npm install --save-dev
+            
            
             
             - run:
                 name: Install Appium
                 command: |
                     cd
-                    npm install -g appium
+                    npm install appium@1.18.2
                     npm audit fix
             - run:
                 name: Start Appium

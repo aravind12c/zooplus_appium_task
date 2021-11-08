@@ -37,7 +37,7 @@ jobs:
                  rm -rf package-lock.json
                  
             - run: npm install --save-dev
-            - run: npm audit fix
+
             
             
             - run:

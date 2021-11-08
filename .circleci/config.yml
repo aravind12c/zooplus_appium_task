@@ -11,7 +11,7 @@ jobs:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-30
-            - image: circleci/openjdk:11-jdk
+            
         steps:
             - checkout
             - run:
@@ -67,6 +67,12 @@ jobs:
                 name: Wait Until Appium Boot
                 command: sleep 30
             - checkout
+            - run:
+                name: Install Maven
+                command: |
+                        sudo apt-get install maven
+                        mvn --version
+                        mvn -version
             
             - run:
                 name: Run Tests

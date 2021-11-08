@@ -10,16 +10,11 @@ jobs:
     regression-test:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/android:api-29
+            - image: circleci/android:api-28
         steps:
             - checkout
             
-            - run:
-                name: Install libs for libpulse
-                command: |
-                        cd
-                        sudo apt-get update
-                        sudo apt-get install pulseaudio
+            
             - run:
                 name: Install Node
                 command: |
@@ -43,11 +38,11 @@ jobs:
                 name: List Images
                 command: |
                     sdkmanager --list --verbose | grep system-images
-                    sdkmanager "platform-tools" "platforms;android-29"
+                    
             - run:
                 name: Setup Emulator
-                command: sdkmanager --install "system-images;android-29;google_apis;arm64-v8a" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-29;google_apis;arm64-v8a" --force
+                command: sdkmanager --install "system-images;android-28;google_apis;x86" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-28;google_apis;x86" --force
             - run:
                 name: Launch Emulator
                 command: |

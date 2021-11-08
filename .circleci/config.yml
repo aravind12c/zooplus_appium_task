@@ -45,8 +45,8 @@ jobs:
                     
             - run:
                 name: Setup Emulator
-                command: sdkmanager --install "system-images;android-28;default;x86_64" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-28;default;x86_64" --force
+                command: sdkmanager --install "system-images;android-31;default;arm64-v8a" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-31;default;arm64-v8a" --force
             - run:
                 name: Launch Emulator
                 command: |

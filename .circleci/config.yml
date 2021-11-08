@@ -17,7 +17,7 @@ jobs:
             - run:
                 name: Install libs for libpulse
                 command: |
-                        cd
+                        cd;
                         sudo apt-get update
                         sudo apt-get install pulseaudio
             
@@ -25,11 +25,11 @@ jobs:
             - run:
                 name: List Images
                 command: |
-                    sdkmanager --list --verbose | grep system-images
+                    cd;sdkmanager --list --verbose | grep system-images
                     
             - run:
                 name: Setup Emulator
-                command: sdkmanager --install "system-images;android-30;google_apis;arm64-v8a" && echo
+                command: cd;sdkmanager --install "system-images;android-30;google_apis;arm64-v8a" && echo
                     "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
             - run:
                 name: Launch Emulator
@@ -42,7 +42,7 @@ jobs:
             - run:
                 name: Install Node
                 command: |
-                    cd
+                    cd;
                     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
                     sudo apt install -y nodejs
             - run:
@@ -56,12 +56,12 @@ jobs:
             - run:
                 name: Install Appium
                 command: |
-                    cd
+                    cd;
                     npm install appium@1.18.2
                     
             - run:
                 name: Start Appium
-                command: appium
+                command: cd;appium
                 background: true
             - run:
                 name: Wait Until Appium Boot
@@ -70,7 +70,7 @@ jobs:
             - run:
                 name: Install Maven
                 command: |
-                        sudo apt-get install maven
+                        cd;sudo apt-get install maven
                         mvn --version
                         mvn -version
             

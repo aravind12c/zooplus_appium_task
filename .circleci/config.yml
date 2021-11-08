@@ -3,7 +3,7 @@ jobs:
     build:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/openjdk:8-jdk
+            - image: circleci/openjdk:11-jdk
         steps:
             - checkout
             - run: mvn clean install -DskipTests=true
@@ -11,7 +11,6 @@ jobs:
         working_directory: ~/zooplus_appium_task
         docker:
             - image: circleci/android:api-29
-            - image: circleci/openjdk:8-jdk
         steps:
             - checkout
             
@@ -21,6 +20,17 @@ jobs:
                         cd
                         sudo apt-get update
                         sudo apt-get install pulseaudio
+            - run:
+                name: Install Node
+                command: |
+                    cd
+                    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+                    sudo apt install -y nodejs
+            - run:
+                name: Print Node and NPM Version
+                command: |
+                    node --version
+                    npm --version            
             - run:
                 name: List Images
                 command: sdkmanager --list --verbose | grep system-images
@@ -35,23 +45,25 @@ jobs:
                     export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
                     emulator -avd test -skin 1080x2220 -no-window -noaudio -no-boot-anim -no-window -accel on
                 background: true
-            
+                
+            - run: |
+                 adb wait-for-device
+                 adb devices
+                 echo "Emulator started"
+            - run: |
+                 rm -rf node_modules
+                 npm cache clean --force
+                 rm -rf package-lock.json
+            - run: npm install --save-dev
+            - run: npm audit fix
+            - run: npm install --save-dev chai
+                    
             - run:
                 name: Wait emulator
                 command: |
                     circle-android wait-for-boot
                     adb shell input keyevent 82
-            - run:
-                name: Install Node
-                command: |
-                    cd
-                    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                    sudo apt install nodejs
-            - run:
-                name: Print Node and NPM Version
-                command: |
-                    node --version
-                    npm --version
+            
             - run:
                 name: Install Appium
                 command: |

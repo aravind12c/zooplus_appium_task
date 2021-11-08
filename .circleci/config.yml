@@ -57,7 +57,7 @@ jobs:
                 command: |
                     cd
                     npm install appium@1.18.2
-                    npm audit fix
+                    
             - run:
                 name: Start Appium
                 command: cd ; appium

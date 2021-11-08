@@ -37,8 +37,8 @@ jobs:
                  rm -rf package-lock.json
                  
             - run: npm install --save-dev
-
-            
+            - run: sudo apt install cpu-checker
+            - run: kvm-ok
             
             - run:
                 name: List Images

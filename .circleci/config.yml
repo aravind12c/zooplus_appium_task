@@ -61,7 +61,7 @@ jobs:
                     
             - run:
                 name: Start Appium
-                command: cd ; appium
+                command: appium
                 background: true
             - run:
                 name: Wait Until Appium Boot

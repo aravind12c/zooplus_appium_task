@@ -37,21 +37,15 @@ jobs:
                  rm -rf package-lock.json
                  
             - run: npm install --save-dev
-            - run: sudo apt install cpu-checker
-            - run: kvm-ok
-            - run: sudo apt install qemu qemu-kvm libvirt-bin bridge-utils virt-manager
-            - run: sudo apt install qemu qemu-kvm libvirt-bin bridge-utils
-            - run: sudo usermod -aG libvirt $(whoami)
-            - run: sudo usermod -aG libvirt-qemu $(whoami)
-            - run: sudo reboot
+           
             
             - run:
                 name: List Images
                 command: sdkmanager --list --verbose | grep system-images
             - run:
                 name: Setup Emulator
-                command: sdkmanager "system-images;android-29;google_apis;x86_64" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-29;google_apis;x86_64" --force
+                command: sdkmanager "system-images;android-29;default;x86_64" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-29;default;x86_64" --force
             - run:
                 name: Launch Emulator
                 command: |

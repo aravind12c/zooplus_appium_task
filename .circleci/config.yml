@@ -41,11 +41,12 @@ jobs:
             
             - run:
                 name: List Images
-                command: sdkmanager --list --verbose | grep system-images
+                command: |
+                    sdkmanager --list --verbose | grep system-images
+                    sdkmanager "platform-tools" "platforms;android-29"
             - run:
                 name: Setup Emulator
-                command: sdkmanager "platform-tools" "platforms;android-29"
-                    sdkmanager --install "system-images;android-29;google_apis;arm64-v8a" && echo
+                command: sdkmanager --install "system-images;android-29;google_apis;arm64-v8a" && echo
                     "no" | avdmanager create avd -n test -k "system-images;android-29;google_apis;arm64-v8a" --force
             - run:
                 name: Launch Emulator

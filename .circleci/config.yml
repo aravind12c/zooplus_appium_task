@@ -19,6 +19,25 @@ jobs:
                         cd
                         sudo apt-get update
                         sudo apt-get install pulseaudio
+            
+            
+            - run:
+                name: List Images
+                command: |
+                    sdkmanager --list --verbose | grep system-images
+                    
+            - run:
+                name: Setup Emulator
+                command: sdkmanager --install "system-images;android-30;google_apis;arm64-v8a" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
+            - run:
+                name: Launch Emulator
+                command: |
+                    cd ${ANDROID_HOME}/emulator;ls
+                    export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
+                    emulator -avd test -skin 1080x2220 -no-window -no-boot-anim -no-window -accel on
+                background: true
+               
             - run:
                 name: Install Node
                 command: |
@@ -39,29 +58,10 @@ jobs:
            
             
             - run:
-                name: List Images
-                command: |
-                    sdkmanager --list --verbose | grep system-images
-                    
-            - run:
-                name: Setup Emulator
-                command: sdkmanager --install "system-images;android-30;google_apis;arm64-v8a" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
-            - run:
-                name: Launch Emulator
-                command: |
-                    cd ${ANDROID_HOME}/emulator;ls
-                    export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
-                    emulator -avd test -skin 1080x2220 -no-window -no-boot-anim -no-window -accel on
-                background: true
-               
-            
-            
-            - run:
                 name: Install Appium
                 command: |
                     cd
-                    npm install appium@1.22.0
+                    npm install -g appium
                     npm audit fix
             - run:
                 name: Start Appium

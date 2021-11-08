@@ -103,7 +103,7 @@
 				<version>3.0.0-M4</version>
 				<configuration>
 					<includes>
-						<exclude>**/TestRunner.java</exclude>
+						<exclude>*/TestRunner.java</exclude>
 					</includes>
 				</configuration>
 			</plugin>

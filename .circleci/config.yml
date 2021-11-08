@@ -13,7 +13,12 @@ jobs:
             - image: circleci/android:api-28-ndk-r17b
         steps:
             - checkout
-            
+            - run:
+                name: Install libs for libpulse
+                command: |
+                        cd
+                        sudo apt-get update
+                        sudo apt-get install pulseaudio
             - run:
                 name: Install Node
                 command: |

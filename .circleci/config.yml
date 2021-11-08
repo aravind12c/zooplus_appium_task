@@ -38,7 +38,7 @@ jobs:
                  
             - run: npm install --save-dev
             - run: npm audit fix
-            - run: npm install --save-dev chai
+            
             
             - run:
                 name: List Images

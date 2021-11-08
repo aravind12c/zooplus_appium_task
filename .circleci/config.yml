@@ -10,7 +10,7 @@ jobs:
     regression-test:
         working_directory: ~/zooplus_appium_task
         docker:
-            - image: circleci/android:api-28
+            - image: circleci/android:api-30
         steps:
             - checkout
             
@@ -41,8 +41,8 @@ jobs:
                     
             - run:
                 name: Setup Emulator
-                command: sdkmanager --install "system-images;android-28;google_apis;x86" && echo
-                    "no" | avdmanager create avd -n test -k "system-images;android-28;google_apis;x86" --force
+                command: sdkmanager --install "system-images;android-30;google_apis;arm64-v8a" && echo
+                    "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
             - run:
                 name: Launch Emulator
                 command: |

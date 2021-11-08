@@ -54,20 +54,8 @@ jobs:
                     export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
                     emulator -avd test -skin 1080x2220 -no-window -no-boot-anim -no-window -accel on
                 background: true
-                
-            - run: |
-                 adb kill-server
-                 adb connect 0.0.0.0:5037
-                 adb wait-for-device
-                 adb devices
-                 echo "Emulator started"
+               
             
-                    
-            - run:
-                name: Wait emulator
-                command: |
-                    circle-android wait-for-boot
-                    adb shell input keyevent 82
             
             - run:
                 name: Install Appium
